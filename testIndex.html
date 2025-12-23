@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人作品集 | Portfolio</title>
+    <link rel="stylesheet" href="background.css">
+    <style>
+        /* --- 基础设置 --- */
+        :root {
+            --bg-color: #0a0a0a;
+            --text-main: #f0f0f0;
+            --text-muted: #888888;
+            --accent: #fff;
+            --transition-curve: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* 经典现代主义字体 */
+            font-weight: 300;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* --- 布局工具 --- */
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- 导航栏 --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+            mix-blend-mode: difference; /* 酷炫的混合模式效果 */
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1400px;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .menu-link {
+            font-size: 0.9rem;
+            margin-left: 30px;
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .menu-link:hover { color: var(--text-main); }
+
+        /* --- Hero 区域 --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-text {
+            font-size: clamp(3rem, 8vw, 8rem); /* 响应式巨型字体 */
+            font-weight: 700;
+            line-height: 0.95;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .hero-sub {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin-top: 2rem;
+        }
+
+        /* --- 动画类 --- */
+        .reveal-text {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1.2s var(--transition-curve);
+        }
+
+        .reveal-text.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- 作品集列表 --- */
+        .works-section {
+            padding: 150px 0;
+        }
+
+        .section-header {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 60px;
+            letter-spacing: 2px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .work-item {
+            display: block;
+            margin-bottom: 120px;
+            position: relative;
+        }
+
+        .work-image-container {
+            width: 100%;
+            height: 60vh;
+            background-color: #1a1a1a;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .work-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: transform 1.5s var(--transition-curve), opacity 0.5s ease;
+            /* 使用灰度滤镜，hover时变色，非常现代 */
+            filter: grayscale(100%);
+        }
+
+        .work-item:hover .work-img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        .work-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: 20px;
+        }
+
+        .work-title {
+            font-size: 3rem;
+            font-weight: 600;
+            letter-spacing: -1px;
+        }
+
+        .work-cat {
+            color: var(--text-muted);
+        }
+
+        /* --- 关于/页脚 --- */
+        .footer {
+            padding: 100px 0;
+            border-top: 1px solid #222;
+        }
+
+        .footer-cta {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 50px;
+        }
+
+        .footer-links a {
+            font-size: 1.2rem;
+            margin-right: 40px;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .footer-links a:hover {
+            border-bottom: 1px solid var(--text-main);
+        }
+
+        /* 简单的占位符样式 (用于没有图片时) */
+        .placeholder-1 { background: linear-gradient(45deg, #222, #444); }
+        .placeholder-2 { background: linear-gradient(45deg, #111, #333); }
+    </style>
+</head>
+<body>
+    <script src="background.js"></script>
+
+<nav>
+    <div class="logo">Aki's 作品集</div>
+    <div class="menu">
+        <a href="#about" class="menu-link">About</a>
+        <a href="#contact" class="menu-link">Contact</a>
+    </div>
+</nav>
+
+<div class="container">
+    <section class="hero">
+        <div>
+            <h1 class="hero-text reveal-text">
+                UX/PX Designer<br>
+                & Researcher.
+            </h1>
+            <p class="hero-sub reveal-text" style="transition-delay: 0.2s;">
+                Based in Toronto, available worldwide.
+            </p>
+        </div>
+    </section>
+
+    <section class="works-section" id="work">
+        <div class="section-header reveal-text">
+            <span>Selected Works</span>
+            <span>(2023 - 2025)</span>
+        </div>
+
+        <a href="#" class="work-item reveal-text">
+            <div class="work-image-container placeholder-1">
+                <div class="work-img" style="background: radial-gradient(circle at center, #333, #000);"></div>
+            </div>
+            <div class="work-info">
+                <h3 class="work-title">Neo Finance</h3>
+                <span class="work-cat">UI/UX Design</span>
+            </div>
+        </a>
+
+        <a href="#" class="work-item reveal-text">
+            <div class="work-image-container placeholder-2">
+                <div class="work-img" style="background: radial-gradient(circle at bottom right, #444, #111);"></div>
+            </div>
+            <div class="work-info">
+                <h3 class="work-title">Future Architecture</h3>
+                <span class="work-cat">Web Development</span>
+            </div>
+        </a>
+    </section>
+
+    <section class="footer" id="contact">
+        <div class="reveal-text">
+            <p style="color: var(--text-muted); margin-bottom: 20px;">NEXT STEP</p>
+            <div class="footer-cta">
+                让我们一起打造<br>更好的用户体验。
+            </div>
+            <div class="footer-links">
+                <a href="mailto:hello@example.com">Email</a>
+                <a href="#">Twitter/X</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Resume</a>
+            </div>
+        </div>
+        <p style="margin-top: 100px; color: #333; font-size: 0.8rem;">
+            © 2025 Aki F., All Rights Reserved.
+        </p>
+    </section>
+</div>
+
+<script>
+    // --- 简单的滚动显现动画脚本 ---
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // 配置观察者选项
+        const observerOptions = {
+            root: null, // 使用视口作为根
+            rootMargin: "0px",
+            threshold: 0.1 // 元素出现 10% 时触发
+        };
+
+        // 创建观察者
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                    // 可选：如果只想触发一次，取消注释下面这行
+                    // observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // 选择所有需要动画的元素
+        const elements = document.querySelectorAll('.reveal-text');
+        elements.forEach(el => observer.observe(el));
+    });
+</script>
+</body>
+</html>
