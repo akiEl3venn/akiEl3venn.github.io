@@ -1,0 +1,20 @@
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none; /* 确保不拦截鼠标事件 */
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    background: transparent !important;
+}
+
+body {
+    margin: 0;
+    background-color: #f5f5f5;
+}
