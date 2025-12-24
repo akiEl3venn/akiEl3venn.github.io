@@ -1,3 +1,28 @@
+//滚动显现动画
+document.addEventListener("DOMContentLoaded", function() {
+    // 配置观察者选项
+    const observerOptions = {
+        root: null, // 使用视口作为根
+        rootMargin: "0px",
+        threshold: 0.1 // 元素出现 10% 时触发
+    };
+
+    // 创建观察者
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+                // 可选：如果只想触发一次，取消注释下面这行
+                // observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // 选择所有需要动画的元素
+    const elements = document.querySelectorAll('.reveal-text');
+    elements.forEach(el => observer.observe(el));
+});
+
 // 背景绘制
 const canvas = document.createElement('canvas');
 document.body.appendChild(canvas);
@@ -202,3 +227,4 @@ document.addEventListener("DOMContentLoaded", function() {
         toggleLanguage();
     }
 });
+

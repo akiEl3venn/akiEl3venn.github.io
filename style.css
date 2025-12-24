@@ -101,6 +101,133 @@ nav {
     transform: translateY(0);
 }
 
+/* =========================================
+   About Me 区域完整样式 (整合修复版)
+   ========================================= */
+
+.about-section {
+    padding: 100px 0;
+    border-bottom: 1px solid #222;
+}
+
+/* 核心布局：Grid 网格系统 */
+/* 如果这部分丢失，页面就会变成单列堆叠 */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr; /* 左侧 1.2份，右侧 0.8份 */
+    gap: 80px; /* 左右两栏的间距 */
+    margin-top: 40px;
+    align-items: start; /* 顶部对齐 */
+}
+
+/* --- 左侧容器样式 --- */
+.about-left {
+    display: flex;
+    flex-direction: column; /* 让“Hi”和“简介”垂直排列 */
+}
+
+/* 问候语 (Hi, I'm Aki) */
+.bio-greeting {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 40px;
+    color: var(--text-main);
+    letter-spacing: -1px;
+}
+
+/* 简介文字 */
+.about-bio p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-main);
+    font-weight: 400;
+}
+
+/* --- 右侧容器样式 --- */
+.about-info {
+    display: flex;
+    flex-direction: column;
+    gap: 50px; /* 模块间的间距 */
+}
+
+/* 模块标题 (Education / Tech Stack) */
+.module-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    border-left: 2px solid var(--text-main);
+    padding-left: 15px;
+}
+
+/* 教育条目细节 */
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-main {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.info-sub {
+    font-size: 0.95rem;
+    color: #ccc;
+    margin-top: 4px;
+}
+
+.info-date {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-family: monospace;
+}
+
+/* 技能列表 (双列) */
+.skill-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+}
+
+.skill-list li {
+    color: #ccc;
+    font-size: 0.95rem;
+    position: relative;
+    padding-left: 15px;
+}
+
+.skill-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 5px;
+    height: 5px;
+    background-color: var(--text-muted);
+}
+
+/* --- 动画延迟控制 --- */
+.delay-200 { transition-delay: 0.2s; }
+.delay-400 { transition-delay: 0.4s; }
+
+/* --- 移动端适配 --- */
+/* 当屏幕宽度小于 900px 时，强制变成单列 */
+@media (max-width: 900px) {
+    .about-grid {
+        grid-template-columns: 1fr; /* 变成单列 */
+        gap: 60px;
+    }
+
+    .bio-greeting {
+        margin-bottom: 20px;
+    }
+}
+
 /* --- 作品集列表 --- */
 .works-section {
     padding: 150px 0;
