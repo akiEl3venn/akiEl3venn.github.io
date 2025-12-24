@@ -1,3 +1,4 @@
+// 背景绘制
 const canvas = document.createElement('canvas');
 document.body.appendChild(canvas);
 const ctx = canvas.getContext('2d');
@@ -168,3 +169,36 @@ function draw() {
 }
 
 draw();
+
+// --- 多语言切换 ---
+function toggleLanguage() {
+    const body = document.body;
+    const btn = document.getElementById('lang-switch');
+
+    // 切换 class
+    body.classList.toggle('en-mode');
+
+    // 检查当前是不是英文模式
+    const isEn = body.classList.contains('en-mode');
+
+    // 1. 更新按钮文字
+    if (isEn) {
+        btn.textContent = '中'; // 如果是英文模式，按钮显示“中”以便切回去
+        localStorage.setItem('preferred-lang', 'en'); // 记住选择
+    } else {
+        btn.textContent = 'EN'; // 如果是中文模式，按钮显示“EN”
+        localStorage.setItem('preferred-lang', 'cn'); // 记住选择
+    }
+}
+
+// --- 页面加载时：检查用户之前的偏好 ---
+document.addEventListener("DOMContentLoaded", function() {
+    // 之前已有的代码...
+
+    // 新增：检查语言设置
+    const savedLang = localStorage.getItem('preferred-lang');
+    if (savedLang === 'en') {
+        // 如果用户上次选了英文，手动触发一次切换
+        toggleLanguage();
+    }
+});

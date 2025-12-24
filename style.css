@@ -1,3 +1,200 @@
+/* --- 基础设置 --- */
+:root {
+    --bg-color: #0a0a0a;
+    --text-main: #f0f0f0;
+    --text-muted: #888888;
+    --accent: #fff;
+    --transition-curve: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* 经典现代主义字体 */
+    font-weight: 300;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* --- 布局工具 --- */
+.container {
+    width: 90%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- 导航栏 --- */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 0;
+    mix-blend-mode: difference; /* 酷炫的混合模式效果 */
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1400px;
+    z-index: 100;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: -0.5px;
+}
+
+.menu-link {
+    font-size: 1rem;
+    margin-left: 30px;
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.menu-link:hover { color: var(--text-main); }
+
+/* --- Hero 区域 --- */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.hero-text {
+    font-size: clamp(3rem, 8vw, 8rem); /* 响应式巨型字体 */
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+}
+
+.hero-sub {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin-top: 2rem;
+}
+
+/* --- 动画类 --- */
+.reveal-text {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1.2s var(--transition-curve);
+}
+
+.reveal-text.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- 作品集列表 --- */
+.works-section {
+    padding: 150px 0;
+}
+
+.section-header {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 60px;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.work-item {
+    display: block;
+    margin-bottom: 120px;
+    position: relative;
+}
+
+.work-image-container {
+    width: 100%;
+    height: 60vh;
+    max-height: 500px;
+    background-color: #1a1a1a;
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+}
+
+.work-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: transform 1.5s var(--transition-curve), opacity 0.5s ease;
+    /* 使用灰度滤镜，hover时变色，非常现代 */
+    filter: grayscale(100%);
+}
+
+.work-item:hover .work-img {
+    transform: scale(1.05);
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.work-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 20px;
+}
+
+.work-title {
+    font-size: 3rem;
+    font-weight: 600;
+    letter-spacing: -1px;
+}
+
+.work-cat {
+    color: var(--text-muted);
+}
+
+/* --- 关于/页脚 --- */
+.footer {
+    padding: 100px 0;
+    border-top: 1px solid #222;
+}
+
+.footer-cta {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 50px;
+}
+
+.footer-links a {
+    font-size: 1.2rem;
+    margin-right: 40px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.footer-links a:hover {
+    border-bottom: 1px solid var(--text-main);
+}
+
+/* 简单的占位符样式 (用于没有图片时) */
+.placeholder-1 { background: linear-gradient(45deg, #222, #444); }
+.placeholder-2 { background: linear-gradient(45deg, #111, #333); }
+
 canvas {
     position: fixed;
     top: 0;
@@ -12,6 +209,37 @@ canvas {
     position: relative;
     z-index: 1;
     background: transparent !important;
+}
+
+/* 多语言切换 */
+/* 默认状态 */
+.lang-en {
+    display: none !important;
+}
+
+/* 显示中文 */
+body.en-mode .lang-cn {
+    display: none !important;
+}
+
+/* 显示英文 */
+body.en-mode .lang-en {
+    display: inline-block !important;
+}
+
+/* 切换按钮 */
+#lang-switch {
+    cursor: pointer;
+    border: 1px solid #555;
+    padding: 2px 8px;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+#lang-switch:hover {
+    border-color: #fff;
+    background-color: #fff;
+    color: #000;
 }
 
 body {
