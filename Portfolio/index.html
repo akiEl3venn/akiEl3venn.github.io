@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <script src="script.js"></script>
+
+<nav>
+    <div class="logo">
+        <span class="lang-cn">Aki 的作品集</span>
+        <span class="lang-en">Aki's Portfolio</span>
+    </div>
+    <div class="menu">
+        <a href="#about" class="menu-link">
+            <span class="lang-cn">关于我</span>
+            <span class="lang-en">About</span>
+        </a>
+        <a href="#work" class="menu-link">
+            <span class="lang-cn">最近项目</span>
+            <span class="lang-en">Recent Works</span>
+        </a>
+        <a href="#contact" class="menu-link">
+            <span class="lang-cn">联系方式</span>
+            <span class="lang-en">Contact</span>
+        </a>
+        <a href="javascript:void(0);" class="menu-link" id="lang-switch" onclick="toggleLanguage()">EN</a>
+    </div>
+</nav>
+
+<div class="container">
+    <section class="hero">
+        <div>
+            <h1 class="hero-text reveal-text">
+                <span class="lang-cn">UX/PX 设计师<br>& 研究员。</span>
+                <span class="lang-en">UX/PX Designer<br>& Researcher.</span>
+            </h1>
+            <p class="hero-sub reveal-text" style="transition-delay: 0.25s;">
+                <span class="lang-cn">Based in Toronto, available worldwide.</span>
+                <span class="lang-en">Based in Toronto, available worldwide.</span>
+            </p>
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="section-header reveal-text">
+            <span class="lang-cn">关于我</span>
+            <span class="lang-en">About Me</span>
+        </div>
+
+        <div class="about-grid">
+
+            <div class="about-left">
+                <h2 class="bio-greeting reveal-text">
+                    <span class="lang-cn">嗨，我是付贵豪。</span>
+                    <span class="lang-en">Hi, I'm Guihao.</span>
+                </h2>
+
+                <div class="about-bio reveal-text delay-200">
+                    <p>
+                    <span class="lang-cn">
+                        你也可以叫我 Aki。我是一名热衷于挖掘数据背后故事的用户体验设计师。我相信好的设计不仅仅是视觉上的愉悦，更是基于严谨的研究与对人类行为的深刻理解。
+                        <br><br>
+                        在设计与技术的交叉点上，我致力于构建既有逻辑美感又充满人文关怀的数字产品。
+                    </span>
+                        <span class="lang-en">
+                        You can also call me Aki. I am an experienced designer passionate about uncovering the stories behind data. I believe good design is not just visual pleasure, but rooted in rigorous research and a deep understanding of human behavior.
+                        <br><br>
+                        At the intersection of design and technology, I strive to build digital products that possess both logical beauty and humanistic care.
+                    </span>
+                    </p>
+                </div>
+            </div> <div class="about-info reveal-text delay-400">
+
+            <div class="info-module">
+                <h4 class="module-title">
+                    <span class="lang-cn">教育背景</span>
+                    <span class="lang-en">Education</span>
+                </h4>
+                <div class="info-item">
+                    <span class="info-main">
+                        <span class="lang-cn">多伦多大学</span>
+                        <span class="lang-en">University of Toronto</span>
+                    </span>
+                    <span class="info-sub">
+                        <span class="lang-cn">信息学硕士 - 用户体验设计</span>
+                        <span class="lang-en">Master of Information - UX Design</span>
+                    </span>
+                    <span class="info-date">2024 - 2026</span>
+
+                </div>
+            </div>
+
+            <div class="info-module">
+                <h4 class="module-title">
+                    <span class="lang-cn">技能</span>
+                    <span class="lang-en">Skills</span>
+                </h4>
+                <ul class="skill-list">
+                    <li>Figma / FigJam</li>
+                    <li>GitHub / Git Commands</li>
+                    <li class="lang-cn">R (数统 / EDA)</li>
+                    <li class="lang-en">R (Statistics / EDA)</li>
+                    <li class="lang-cn">Python (数据分析 / 可视化)</li>
+                    <li class="lang-en">Python (Data Analysis / Visualization)</li>
+                </ul>
+            </div>
+
+        </div> </div>
+    </section>
+
+    <section class="works-section" id="work">
+        <div class="section-header reveal-text">
+            <span class="lang-cn">最近项目</span>
+            <span class="lang-en">Recent Works</span>
+            <span class="lang-cn">(2023 - 2025)</span>
+            <span class="lang-en">(2023 - 2025)</span>
+        </div>
+
+        <a href="#" class="work-item reveal-text">
+            <div class="work-image-container placeholder-1">
+                <div class="work-img" style="background: radial-gradient(circle at center, #333, #000);"></div>
+            </div>
+            <div class="work-info">
+                <h3 class="work-title">
+                    <span class="lang-cn">Steam 游戏数据研究与分析</span>
+                    <span class="lang-en">Steam Games Analysis</span>
+                </h3>
+                <span class="work-cat">
+                    <span class="lang-cn">玩家体验研究 / 数据分析</span>
+                    <span class="lang-en">PX Research / Data Analysis</span>
+                </span>
+            </div>
+        </a>
+
+        <a href="#" class="work-item reveal-text">
+            <div class="work-image-container placeholder-2">
+                <div class="work-img" style="background: radial-gradient(circle at bottom right, #444, #111);"></div>
+            </div>
+            <div class="work-info">
+                <h3 class="work-title">
+                    <span class="lang-cn">Loop</span>
+                    <span class="lang-en"> Loop</span>
+                </h3>
+                <span class="work-cat">
+                    <span class="lang-cn">前期产品经理 / 用户体验研究与设计</span>
+                    <span class="lang-en">Early-Stage PM / UX Research & Design</span>
+                    </span>
+            </div>
+        </a>
+    </section>
+
+    <section class="footer" id="contact">
+        <div class="reveal-text">
+            <p style="color: var(--text-muted); margin-bottom: 20px;">NEXT STEP</p>
+            <div class="footer-cta">
+                <span class="lang-cn">以玩家之心，<br>用细节点亮星辰。</span>
+                <span class="lang-en">Grounded in player voices,<br>turn insight into impact.</span>
+            </div>
+            <div class="footer-links">
+                <a href="mailto:akihiro195@outlook.com">
+                    <span class="lang-cn">电子邮件</span>
+                    <span class="lang-en">Email</span>
+                </a>
+                <a href="https://www.linkedin.com/in/guihao-fu-3b79b1289/">
+                    <span class="lang-cn">领英</span>
+                    <span class="lang-en">LinkedIn</span>
+                </a>
+                <a href="#">
+                    <span class="lang-cn">我的简历</span>
+                    <span class="lang-en">Resume</span>
+                </a>
+            </div>
+        </div>
+        <p style="margin-top: 100px; color: #333; font-size: 0.8rem;">
+            © 2025 Guihao F., All Rights Reserved.
+        </p>
+    </section>
+</div>
+</body>
+</html>
