@@ -1,9 +1,12 @@
-/* --- 基础设置 --- */
+/* =========================================
+   0. 全局变量与重置
+   ========================================= */
 :root {
     --bg-color: #0a0a0a;
     --text-main: #f0f0f0;
     --text-muted: #888888;
     --accent: #fff;
+    --tech-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --transition-curve: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -16,7 +19,7 @@
 body {
     background-color: var(--bg-color);
     color: var(--text-main);
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* 经典现代主义字体 */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     overflow-x: hidden;
     line-height: 1.6;
@@ -25,28 +28,34 @@ body {
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 
-/* --- 布局工具 --- */
+/* =========================================
+   1. 布局容器
+   ========================================= */
 .container {
-    width: 90%;
+    width: 100%;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
+    /* 防止内容撞到 HUD 装饰线和高度计 */
+    padding: 0 80px 0 80px;
+    position: relative;
+    z-index: 10; /* 确保内容在背景之上 */
 }
 
-/* --- 导航栏 --- */
+/* 导航栏 */
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 40px 0;
-    mix-blend-mode: difference; /* 酷炫的混合模式效果 */
+    padding: 40px 80px;
+    /* 导航栏必须固定宽度并居中，以免贴边 */
+    width: 100%;
+    max-width: 1400px;
     position: fixed;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 90%;
-    max-width: 1400px;
     z-index: 100;
+    mix-blend-mode: difference;
 }
 
 .logo {
@@ -55,9 +64,15 @@ nav {
     letter-spacing: -0.5px;
 }
 
+/* 导航菜单 */
+.menu {
+    display: flex;         /* 让内部的链接横向排列 */
+    align-items: center;   /* 确保文字和边框按钮垂直居中对齐 */
+    gap: 30px;            /* 使用 gap 来控制间距，比 margin 更稳定 */
+}
+
 .menu-link {
-    font-size: 1rem;
-    margin-left: 30px;
+    font-size: 0.9rem;
     color: var(--text-muted);
     transition: color 0.3s ease;
     text-transform: uppercase;
@@ -66,175 +81,239 @@ nav {
 
 .menu-link:hover { color: var(--text-main); }
 
-/* --- Hero 区域 --- */
+
+/* NASA Punk HUD 装饰层 (固定层) */
+.hud-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    mix-blend-mode: exclusion;
+}
+
+/* 边角十字 */
+.hud-corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: rgba(255, 255, 255, 0.2);
+    border-style: solid;
+}
+.top-left { top: 30px; left: 30px; border-width: 1px 0 0 1px; }
+.top-right { top: 30px; right: 30px; border-width: 1px 1px 0 0; }
+.bottom-left { bottom: 30px; left: 30px; border-width: 0 0 1px 1px; }
+.bottom-right { bottom: 30px; right: 30px; border-width: 0 1px 1px 0; }
+
+/* 左侧线条 */
+.hud-line-left {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 150px;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.3), transparent);
+}
+
+/* 高度计 */
+.altimeter {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    opacity: 0.8;
+
+    /* 动效：整体缓慢呼吸 */
+    animation: alt-breathe 8s ease-in-out infinite;
+}
+
+.alt-scale {
+    position: relative;
+    /* 动态长度：随窗口高度变化 */
+    height: 60vh;
+    min-height: 200px;
+
+    /* 微弧形设计 */
+    border-right: 1px solid rgba(255,255,255,0.15);
+    border-radius: 0 100% 100% 0 / 0 15% 15% 0; /* 更加平缓的弧度 */
+    display: flex;
+    align-items: center;
+}
+
+.alt-ticks {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding-right: 6px; /* 给弧线留点距离 */
+    /* 上下淡化 */
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+}
+
+.alt-ticks span {
+    width: 6px;
+    height: 1px;
+    background-color: rgba(255,255,255,0.4);
+    box-shadow: 0 0 3px rgba(255,255,255,0.1);
+}
+
+/* 让刻度线更有韵律感 */
+.alt-ticks span:nth-child(odd) { width: 4px; opacity: 0.4; }
+.alt-ticks span:nth-child(even) { width: 8px; opacity: 0.7; }
+
+/* 箭头：绝对定位，独立于遮罩之外 */
+.alt-marker {
+    position: absolute;
+    right: 15px;
+    top: 0%; /* JS 控制 */
+    font-size: 0.8rem;
+    color: var(--accent);
+    white-space: nowrap;
+    text-shadow: 0 0 5px currentColor;
+
+    /* 动效：机械抖动 */
+    animation: marker-jitter 3s infinite ease-in-out;
+}
+
+.alt-label {
+    margin-top: 15px;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    opacity: 0.6;
+}
+
+@keyframes alt-breathe {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes marker-jitter {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+    55% { transform: translateY(1px); }
+    60% { transform: translateY(0); }
+}
+
+/* 极限小窗口隐藏 */
+@media (max-height: 500px) {
+    .altimeter { display: none; }
+}
+
+/* Hero 区域 */
 .hero {
     height: 100vh;
     display: flex;
-    align-items: center;
+    align-items: center; /* 垂直居中 */
+    justify-content: flex-start; /* 水平靠左 */
     position: relative;
 }
 
-.hero-text {
-    font-size: clamp(3rem, 8vw, 8rem); /* 响应式巨型字体 */
+.typing-cursor::after {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 0.9em; /* 稍微比文字矮一点点 */
+    background-color: #ff6600; /* 工业橙 */
+    margin-left: 4px;
+    vertical-align: baseline; /* 确保底部对齐 */
+    /* 闪烁动画 */
+    animation: blink 0.8s step-end infinite;
+}
+
+/* 当 JS 想要隐藏光标时，移除 content 即可 */
+.typing-cursor.finished::after {
+    content: none; /* 彻底消失，不占位 */
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+body.en-mode h1 .lang-en {
+    display: inline !important;
+}
+
+/* 限制 Hero 文字宽度，防止撞到右侧高度计 */
+.hero > div {
+    max-width: 800px;
+}
+
+.tech-tag {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 25px;
+    border: 1px solid #333;
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(0,0,0,0.3);
+}
+
+.hero-greeting {
+    font-size: clamp(3rem, 6vw, 5.5rem);
     font-weight: 700;
-    line-height: 0.95;
+    line-height: 1.1;
+    margin-bottom: 15px;
     letter-spacing: -2px;
-    margin-bottom: 20px;
+    color: var(--text-main);
+}
+
+.hero-role {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.3;
+    margin-bottom: 30px;
 }
 
 .hero-sub {
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     color: var(--text-muted);
-    max-width: 500px;
-    margin-top: 2rem;
+    border-left: 2px solid #ff6600;
+    padding-left: 15px;
+    max-width: 400px;
 }
 
-/* --- 动画类 --- */
-.reveal-text {
+/* 序列控制类 */
+/* 给需要等待打字机写完才出现的元素加这个类 */
+.wait-for-typewriter {
     opacity: 0;
-    transform: translateY(50px);
-    transition: all 1.2s var(--transition-curve);
+    transform: translateY(30px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.reveal-text.active {
+/* 当打字机结束后，JS 会加上这个类 */
+.wait-for-typewriter.show {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* =========================================
-   About Me 区域完整样式 (整合修复版)
-   ========================================= */
+/* 覆盖之前的延迟，由 JS 控制顺序 */
+.hero-role.show { transition-delay: 0.1s; }
+.hero-sub.show { transition-delay: 0.3s; }
 
+/* About 区域 */
 .about-section {
     padding: 100px 0;
     border-bottom: 1px solid #222;
 }
 
-/* 核心布局：Grid 网格系统 */
-/* 如果这部分丢失，页面就会变成单列堆叠 */
-.about-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr; /* 左侧 1.2份，右侧 0.8份 */
-    gap: 80px; /* 左右两栏的间距 */
-    margin-top: 40px;
-    align-items: start; /* 顶部对齐 */
-}
-
-/* --- 左侧容器样式 --- */
-.about-left {
-    display: flex;
-    flex-direction: column; /* 让“Hi”和“简介”垂直排列 */
-}
-
-/* 问候语 (Hi, I'm Aki) */
-.bio-greeting {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 40px;
-    color: var(--text-main);
-    letter-spacing: -1px;
-}
-
-/* 简介文字 */
-.about-bio p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: var(--text-main);
-    font-weight: 400;
-}
-
-/* --- 右侧容器样式 --- */
-.about-info {
-    display: flex;
-    flex-direction: column;
-    gap: 50px; /* 模块间的间距 */
-}
-
-/* 模块标题 (Education / Tech Stack) */
-.module-title {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-    margin-bottom: 20px;
-    border-left: 2px solid var(--text-main);
-    padding-left: 15px;
-}
-
-/* 教育条目细节 */
-.info-item {
-    display: flex;
-    flex-direction: column;
-}
-
-.info-main {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-main);
-}
-
-.info-sub {
-    font-size: 0.95rem;
-    color: #ccc;
-    margin-top: 4px;
-}
-
-.info-date {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-top: 4px;
-    font-family: monospace;
-}
-
-/* 技能列表 (双列) */
-.skill-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 20px;
-}
-
-.skill-list li {
-    color: #ccc;
-    font-size: 0.95rem;
-    position: relative;
-    padding-left: 15px;
-}
-
-.skill-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 9px;
-    width: 5px;
-    height: 5px;
-    background-color: var(--text-muted);
-}
-
-/* --- 动画延迟控制 --- */
-.delay-200 { transition-delay: 0.2s; }
-.delay-400 { transition-delay: 0.4s; }
-
-/* --- 移动端适配 --- */
-/* 当屏幕宽度小于 900px 时，强制变成单列 */
-@media (max-width: 900px) {
-    .about-grid {
-        grid-template-columns: 1fr; /* 变成单列 */
-        gap: 60px;
-    }
-
-    .bio-greeting {
-        margin-bottom: 20px;
-    }
-}
-
-/* --- 作品集列表 --- */
-.works-section {
-    padding: 150px 0;
-}
-
 .section-header {
-    font-size: 1rem;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    font-weight: 400;
     text-transform: uppercase;
     color: var(--text-muted);
     margin-bottom: 60px;
@@ -245,116 +324,298 @@ nav {
     justify-content: space-between;
 }
 
+.about-grid {
+    display: grid;
+    /* 调整比例，避免左侧太宽 */
+    grid-template-columns: 1.5fr 1fr;
+    gap: 100px;
+    margin-top: 40px;
+}
+
+.about-bio p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+/* 联系方式集成 */
+.contact-module {
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px dashed #333;
+}
+
+.contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.contact-links a {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s;
+}
+
+.contact-links a:hover {
+    color: #ff6600;
+    border-bottom-color: #ff6600;
+}
+
+.module-title {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    border-left: 2px solid var(--text-main);
+    padding-left: 15px;
+    text-transform: uppercase;
+}
+
+.info-module { margin-bottom: 50px; }
+.info-item { display: flex; flex-direction: column; }
+.info-main { font-size: 1.1rem; font-weight: 600; color: var(--text-main); }
+.info-sub { font-size: 0.95rem; color: #ccc; margin-top: 4px; }
+.info-date { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+
+.skill-list {
+    display: grid;
+    grid-template-columns: 1fr; /* 单列更稳妥，或者 1fr 1fr */
+    gap: 10px;
+}
+
+.skill-list li {
+    font-size: 0.85rem;
+    color: #ccc;
+}
+
+/* Works 区域 */
+.works-section { padding: 100px 0; }
+
 .work-item {
     display: block;
     margin-bottom: 120px;
-    position: relative;
 }
 
 .work-image-container {
     width: 100%;
-    height: 60vh;
-    max-height: 500px;
+    height: 50vh; /* 限制高度 */
+    max-height: 600px;
     background-color: #1a1a1a;
     overflow: hidden;
     position: relative;
-    border-radius: 8px;
+    border-radius: 2px;
 }
 
 .work-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.8;
-    transition: transform 1.5s var(--transition-curve), opacity 0.5s ease;
-    /* 使用灰度滤镜，hover时变色，非常现代 */
     filter: grayscale(100%);
+    transition: transform 1.2s var(--transition-curve), filter 0.5s ease;
 }
 
 .work-item:hover .work-img {
     transform: scale(1.05);
     filter: grayscale(0%);
-    opacity: 1;
 }
 
 .work-info {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-    margin-top: 20px;
+    align-items: flex-start;
+    margin-top: 25px;
 }
 
+/* 下划线动画 */
 .work-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 600;
     letter-spacing: -1px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 5px;
 }
 
-.work-cat {
-    color: var(--text-muted);
+.work-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--text-main);
+    transition: width 0.4s var(--transition-curve), left 0.4s var(--transition-curve);
+    transform: translateX(-50%);
 }
 
-/* --- 关于/页脚 --- */
-.footer {
-    padding: 100px 0;
-    border-top: 1px solid #222;
+.work-item:hover .work-title::after { width: 100%; }
+.work-meta { text-align: right; }
+.work-date { font-size: 0.85rem; display: block; margin-bottom: 5px; }
+.work-cat { font-size: 0.9rem; color: var(--text-muted); }
+
+
+/* 更多项目 */
+.more-projects-wrapper {
+    border-top: none;
+    margin-top: 80px;
+    padding-top: 0;
+    text-align: center;
+    position: relative;
 }
 
-.footer-cta {
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 50px;
+/* 触发按钮容器 */
+.more-trigger {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center; /* 确保垂直居中 */
+    /* 增加左右内边距 */
+    /* 条纹宽 40px，这里设为 80px，意味着中间有 40px 的间距 */
+    padding: 15px 80px;
+    position: relative;
+    background: none;
+    border: none;
+    color: var(--text-muted); /* 默认灰色 */
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 2px; /* 稍微增加字间距优化排版 */
+    line-height: 1; /* 消除行高带来的垂直偏移 */
+    cursor: pointer;
+    transition: color 0.3s ease; /* 仅保留文字颜色的过渡 */
+    /* 防止文字换行破坏布局 */
+    white-space: nowrap;
 }
 
-.footer-links a {
-    font-size: 1.2rem;
-    margin-right: 40px;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s;
+/* 橙色能量条 */
+.more-trigger::before,
+.more-trigger::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 14px;
+    width: 40px;
+    /* 橙色条纹图案 */
+    background: repeating-linear-gradient(
+            to right,
+            #ff6600,
+            #ff6600 2px,
+            transparent 2px,
+            transparent 6px
+    );
+    opacity: 0.8;
 }
 
-.footer-links a:hover {
-    border-bottom: 1px solid var(--text-main);
+/* 左侧条形 */
+.more-trigger::before {
+    left: 0;
+    /* 向左淡出遮罩 */
+    -webkit-mask-image: linear-gradient(to left, black 20%, transparent);
+    mask-image: linear-gradient(to left, black 20%, transparent);
 }
 
-/* 简单的占位符样式 (用于没有图片时) */
-.placeholder-1 { background: linear-gradient(45deg, #222, #444); }
-.placeholder-2 { background: linear-gradient(45deg, #111, #333); }
+/* 右侧条形 */
+.more-trigger::after {
+    right: 0;
+    /* 右侧纹理反向 */
+    background: repeating-linear-gradient(
+            to left,
+            #ff6600,
+            #ff6600 2px,
+            transparent 2px,
+            transparent 6px
+    );
+    /* 向右淡出遮罩 */
+    -webkit-mask-image: linear-gradient(to right, black 20%, transparent);
+    mask-image: linear-gradient(to right, black 20%, transparent);
+}
+
+/* Hover 状态 */
+.more-trigger:hover {
+    color: #ff6600; /* 仅文字变橙色 */
+}
+
+/* 下拉网格容器 */
+.more-grid-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.8s var(--transition-curve), opacity 0.8s ease, margin 0.8s ease;
+    opacity: 0;
+}
+
+.more-grid-container.open {
+    max-height: 1200px;
+    opacity: 1;
+    margin-top: 50px;
+    margin-bottom: 80px;
+}
+
+.more-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px;
+    text-align: left;
+}
+
+/* 小项目样式 */
+.square-item { display: block; }
+
+.square-img-box {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #1a1a1a;
+    margin-bottom: 15px;
+    overflow: hidden;
+    border-radius: 2px;
+}
+
+.square-img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(100%);
+    transition: transform 0.5s ease, filter 0.3s;
+}
+
+.square-item:hover .square-img {
+    filter: grayscale(0%);
+    transform: scale(1.05);
+}
+
+.square-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 5px; color: var(--text-main); }
+.square-date { font-size: 0.85rem; color: var(--text-muted); font-family: inherit; }
+
+/* 动画与辅助 */
+.reveal-text {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s var(--transition-curve);
+}
+
+.reveal-text.active { opacity: 1; transform: translateY(0); }
+.delay-200 { transition-delay: 0.2s; }
+.delay-400 { transition-delay: 0.4s; }
+.delay-600 { transition-delay: 0.6s; }
 
 canvas {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     z-index: -1;
-    pointer-events: none; /* 确保不拦截鼠标事件 */
-}
-
-.container {
-    position: relative;
-    z-index: 1;
-    background: transparent !important;
+    pointer-events: none;
 }
 
 /* 多语言切换 */
-/* 默认状态 */
-.lang-en {
-    display: none !important;
-}
+.lang-en { display: none !important; }
+body.en-mode .lang-cn { display: none !important; }
+body.en-mode .lang-en { display: inline-block !important; }
+/* 块级元素双语修复 */
+body.en-mode h1 .lang-en, body.en-mode div .lang-en, body.en-mode li .lang-en { display: block !important; }
 
-/* 显示中文 */
-body.en-mode .lang-cn {
-    display: none !important;
-}
-
-/* 显示英文 */
-body.en-mode .lang-en {
-    display: inline-block !important;
-}
-
-/* 切换按钮 */
 #lang-switch {
     cursor: pointer;
     border: 1px solid #555;
@@ -362,13 +623,68 @@ body.en-mode .lang-en {
     font-size: 0.8rem;
     transition: all 0.3s ease;
 }
-
 #lang-switch:hover {
     border-color: #fff;
     background-color: #fff;
     color: #000;
 }
 
-body {
-    margin: 0;
+
+/* 响应式组件 */
+/* 笔记本电脑尺寸 (1200px - 1440px) */
+@media (max-width: 1440px) {
+    .container {
+        /* 当屏幕变窄时，内容稍微往中间挤一点，避开高度计 */
+        padding: 0 100px 0 60px;
+    }
 }
+
+/* 平板/小屏幕 (小于 1024px) */
+@media (max-width: 1024px) {
+    /* 隐藏高度计和左侧装饰线，因为屏幕太窄了，会挡住文字 */
+    .altimeter, .hud-line-left {
+        display: none;
+    }
+
+    .container, nav {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr; /* 变为单列 */
+        gap: 60px;
+    }
+
+    .hero-greeting { font-size: 4rem; }
+
+    .work-title { font-size: 2rem; }
+}
+
+/* Footer */
+.footer {
+    padding: 100px 0;
+    border-top: 1px solid #222;
+    position: relative;
+    z-index: 20; /* 确保在装饰层之上 */
+}
+
+.footer-cta {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 50px;
+    color: var(--text-main);
+}
+
+/* 手机适配 */
+@media (max-width: 768px) {
+    .more-trigger {
+        padding: 15px 50px; /* 手机上稍微减小间距 */
+    }
+    .more-trigger::before, .more-trigger::after {
+        width: 30px;
+    }
+}
+
