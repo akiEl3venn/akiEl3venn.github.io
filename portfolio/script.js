@@ -16,6 +16,8 @@ document.addEventListener("DOMContentLoaded", function() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("active");
+            } else {
+                entry.target.classList.remove("active");
             }
         });
     }, observerOptions);
@@ -98,6 +100,8 @@ function updateAltimeter() {
 function toggleMore() {
     const grid = document.getElementById('moreGrid');
     grid.classList.toggle('open');
+    // 触发一次滚动数据更新，以便背景重新计算
+    setTimeout(updateScrollData, 800); // 等待动画大致完成
 }
 
 //多语言
@@ -128,10 +132,18 @@ let width, height;
 let scrollY = 0;
 let offset = 0;
 let docHeight = 0;
+let targetDocHeight = 0; // 目标高度，用于平滑过渡
 
 function updateScrollData() {
     // 获取准确的文档总高度
-    docHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    const currentHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    // 如果是第一次初始化，直接赋值
+    if (targetDocHeight === 0) {
+        targetDocHeight = currentHeight;
+        docHeight = currentHeight;
+    } else {
+        targetDocHeight = currentHeight;
+    }
     scrollY = window.scrollY;
     updateAltimeter();
 }
@@ -198,7 +210,15 @@ function getSpacingAt(y) {
 function draw() {
     ctx.clearRect(0, 0, width, height);
     // 动画偏移量
-    offset += 0.003;
+    offset += 0.025;
+    
+    // 平滑过渡 docHeight
+    if (Math.abs(targetDocHeight - docHeight) > 1) {
+        docHeight += (targetDocHeight - docHeight) * 0.05; // 缓动系数
+    } else {
+        docHeight = targetDocHeight;
+    }
+
     const orangeStrokeBase = [255, 102, 0];
     const grayStrokeBase = [128, 128, 128];
     const centerX = width / 2;
