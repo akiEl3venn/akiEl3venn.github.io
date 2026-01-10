@@ -16,7 +16,15 @@
 
     <div class="altimeter">
         <div class="alt-scale">
-            <div class="alt-marker" id="alt-marker">◀ <span id="alt-val">000</span></div>
+            <div class="alt-marker" id="alt-marker">
+                <div class="marker-wrapper">
+                    <div class="marker-value">◀ <span id="alt-val">000</span></div>
+                    <div class="marker-rtb">
+                        <span class="lang-cn">▲ 回到顶部</span>
+                        <span class="lang-en">▲ BACK TO TOP</span>
+                    </div>
+                </div>
+            </div>
             <div class="alt-ticks">
                 <span></span><span></span><span></span><span></span><span></span>
             </div>
@@ -256,6 +264,12 @@
         </p>
     </section>
 </div>
+
+<!-- 移动端专用回到顶部按钮 -->
+<button id="mobile-rtb" class="mobile-rtb-btn" aria-label="Return to Base">
+    ▲
+</button>
+
 <script src="script.js"></script>
 </body>
 </html>

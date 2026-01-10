@@ -174,9 +174,53 @@ nav {
     color: var(--accent);
     white-space: nowrap;
     text-shadow: 0 0 5px currentColor;
+    cursor: pointer; /* 变为可点击 */
+    pointer-events: auto; /* 允许点击 */
+    transition: transform 0.3s ease;
 
     /* 动效：机械抖动 */
     animation: marker-jitter 3s infinite ease-in-out;
+}
+
+.marker-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.marker-value {
+    transition: color 0.3s ease;
+}
+
+.marker-rtb {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    opacity: 0; /* 默认隐藏 */
+    transform: translateX(10px);
+    transition: all 0.3s var(--transition-curve);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* 当页面滚动超过一定距离后，通过 JS 添加 .show-rtb 类来显示 */
+.alt-marker.show-rtb .marker-rtb {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Hover 状态：增强高亮 */
+.alt-marker:hover {
+    animation-play-state: paused; /* 停止抖动以便点击 */
+    transform: scale(1.1);
+}
+
+.alt-marker:hover .marker-value {
+    color: #ff6600;
+}
+
+.alt-marker:hover .marker-rtb {
+    color: #ff6600;
 }
 
 .alt-label {
@@ -201,9 +245,45 @@ nav {
     60% { transform: translateY(0); }
 }
 
-/* 极限小窗口隐藏 */
-@media (max-height: 500px) {
+/* 移动端专用回到顶部按钮 */
+.mobile-rtb-btn {
+    display: none; /* 默认隐藏，仅在小屏幕显示 */
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: rgba(10, 10, 10, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ff6600;
+    font-size: 1.2rem;
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%; /* 圆形更适合触摸 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    backdrop-filter: blur(5px);
+}
+
+.mobile-rtb-btn.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.mobile-rtb-btn:active {
+    transform: scale(0.95);
+    background: rgba(255, 102, 0, 0.2);
+}
+
+/* 极限小窗口隐藏高度计，显示移动端按钮 */
+@media (max-width: 1024px) {
     .altimeter { display: none; }
+    .mobile-rtb-btn { display: flex; }
 }
 
 /* Hero 区域 */

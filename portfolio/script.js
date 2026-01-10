@@ -64,6 +64,37 @@ document.addEventListener("DOMContentLoaded", function() {
 
         setTimeout(typeWriter, 500);
     }
+
+    // 回到顶部逻辑 (融合到高度计箭头)
+    const altMarker = document.getElementById('alt-marker');
+    if (altMarker) {
+        altMarker.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // 移动端回到顶部逻辑
+    const mobileRtbBtn = document.getElementById('mobile-rtb');
+    if (mobileRtbBtn) {
+        mobileRtbBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 监听滚动以显示/隐藏移动端按钮
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                mobileRtbBtn.classList.add('visible');
+            } else {
+                mobileRtbBtn.classList.remove('visible');
+            }
+        }, { passive: true });
+    }
 });
 
 //辅助功能
@@ -85,6 +116,13 @@ function updateAltimeter() {
     if(marker) {
         // 直接设置 style.top，配合 CSS 的 mask 实现进出
         marker.style.top = `${scrollPercent * 100}%`;
+
+        // 自动显示 RTB 提示 (当滚动超过 Hero 区域后)
+        if (window.scrollY > window.innerHeight * 0.8) {
+            marker.classList.add('show-rtb');
+        } else {
+            marker.classList.remove('show-rtb');
+        }
     }
 
     if(valText) {
