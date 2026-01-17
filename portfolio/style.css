@@ -295,6 +295,10 @@ nav {
     position: relative;
 }
 
+.highlight {
+    color: #ff6600;
+}
+
 .typing-cursor::after {
     content: '';
     display: inline-block;
