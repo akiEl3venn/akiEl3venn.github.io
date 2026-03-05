@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aki's Resume | UX & PX</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="hud-layer">
+    <div class="hud-corner top-left"></div>
+    <div class="hud-corner top-right"></div>
+    <div class="hud-corner bottom-left"></div>
+    <div class="hud-corner bottom-right"></div>
+    <div class="hud-line-left"></div>
+
+    <div class="altimeter">
+        <div class="alt-scale">
+            <div class="alt-marker" id="alt-marker">
+                <div class="marker-wrapper">
+                    <div class="marker-value">◀ <span id="alt-val">000</span></div>
+                    <div class="marker-rtb">
+                        <span class="lang-cn">▲ 回到顶部</span>
+                        <span class="lang-en">▲ BACK TO TOP</span>
+                    </div>
+                </div>
+            </div>
+            <div class="alt-ticks">
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="alt-label">AKIEL3VENN.</div>
+    </div>
+</div>
+
+<header class="modern-header">
+    <div class="header-3d-wrapper">
+        <div class="header-chassis">
+            <div class="flare flare-left"></div>
+            <div class="flare flare-right"></div>
+        </div>
+    </div>
+
+    <div class="header-content">
+        <div class="logo">
+            <a href="../index.html">
+                <span class="lang-cn">Aki 的作品集</span>
+                <span class="lang-en">Aki's Portfolio</span>
+            </a>
+        </div>
+        <div class="menu">
+            <a href="../index.html#about" class="menu-link">
+                <span class="lang-cn">关于我</span>
+                <span class="lang-en">About Me</span>
+            </a>
+            <a href="../index.html#work" class="menu-link">
+                <span class="lang-cn">最近项目</span>
+                <span class="lang-en">Recent Works</span>
+            </a>
+            <a href="javascript:void(0);" class="menu-link" id="lang-switch" onclick="toggleLanguage()">EN</a>
+        </div>
+    </div>
+
+    <div class="header-accent-line"></div>
+</header>
+
+<div class="container" style="padding-top: 150px; padding-bottom: 100px;">
+
+    <section class="resume-wrapper">
+        <div class="resume-top-bar reveal-text">
+            <div class="section-header" style="margin-bottom: 0; border-bottom: none; padding-bottom: 0;">
+                <span class="lang-cn">个人简历</span>
+                <span class="lang-en">Curriculum Vitae</span>
+            </div>
+            <button class="resume-download-btn" id="download-cv">
+                <span class="lang-cn">下载简历 [PDF] ↓</span>
+                <span class="lang-en">DOWNLOAD RESUME [PDF] ↓</span>
+            </button>
+        </div>
+
+        <div class="resume-divider reveal-text"></div>
+
+        <div class="resume-profile reveal-text delay-200">
+            <div class="profile-info">
+                <h1 class="profile-name">
+                    <span class="lang-cn">付贵豪</span>
+                    <span class="lang-en">Guihao Fu</span>
+                </h1>
+                <div class="profile-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">TEL:</span> +1 (647)676-2227
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">EMAIL:</span> akihiro195@outlook.com
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">LOC:</span>
+                        <span class="lang-cn">加拿大多伦多</span>
+                        <span class="lang-en">Toronto, Canada</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">WECHAT:</span> akihiro195
+                    </div>
+                </div>
+                <div class="profile-status">
+                    <span class="status-indicator"></span>
+                    <span class="lang-cn">当前状态: 在校生(可接受实习时间安排)</span>
+                    <span class="lang-en">Current Status: Student (Available for Internship)</span>
+                </div>
+            </div>
+
+            <div class="profile-photo-box">
+                <div class="hud-corner top-left"></div>
+                <div class="hud-corner top-right"></div>
+                <div class="hud-corner bottom-left"></div>
+                <div class="hud-corner bottom-right"></div>
+                <div class="photo-placeholder-text">
+                    <span class="lang-cn">影像数据 // 待载入</span>
+                    <span class="lang-en">IMAGE // PENDING</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="resume-block reveal-text delay-200">
+            <h2 class="resume-sec-title">
+                <span class="title-accent">//</span>
+                <span class="lang-cn">教育经历</span>
+                <span class="lang-en">EDUCATION</span>
+            </h2>
+
+            <div class="resume-item">
+                <div class="item-header">
+                    <h3 class="item-title">
+                        <span class="lang-cn">多伦多大学 <span class="tag-badge">海外QS前100</span></span>
+                        <span class="lang-en">University of Toronto <span class="tag-badge">QS Top 100</span></span>
+                    </h3>
+                    <div class="item-timeline">
+                        <span class="lang-cn">2024年09月 - 2026年06月 | 加拿大多伦多</span>
+                        <span class="lang-en">Sep 2024 - Jun 2026 | Toronto, Canada</span>
+                    </div>
+                </div>
+                <div class="item-sub">
+                    <span class="lang-cn">用户体验设计(UXD) 硕士 - 信息学院</span>
+                    <span class="lang-en">Master of Information - User Experience Design (UXD)</span>
+                </div>
+                <div class="item-desc">
+                    <p>
+                        <span class="lang-cn"><strong>当前GPA:</strong> 3.96/4.0</span>
+                        <span class="lang-en"><strong>Current GPA:</strong> 3.96/4.0</span>
+                    </p>
+                    <p>
+                        <span class="lang-cn"><strong>相关课程:</strong> 信息架构、用户为中心的信息系统开发、用户研究方法、业务系统分析与流程创新</span>
+                        <span class="lang-en"><strong>Relevant Courses:</strong> Information Architecture, User-Centered Information Systems Development, User Research Methods, Business Systems Analysis and Process Innovation</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="resume-item">
+                <div class="item-header">
+                    <h3 class="item-title">
+                        <span class="lang-cn">约克大学</span>
+                        <span class="lang-en">York University</span>
+                    </h3>
+                    <div class="item-timeline">
+                        <span class="lang-cn">2019年01月 - 2023年06月 | 加拿大多伦多</span>
+                        <span class="lang-en">Jan 2019 - Jun 2023 | Toronto, Canada</span>
+                    </div>
+                </div>
+                <div class="item-sub">
+                    <span class="lang-cn">传播和媒体研究学 本科 - 文理学院</span>
+                    <span class="lang-en">Bachelor of Arts - Communication and Media Studies</span>
+                </div>
+                <div class="item-desc">
+                    <p><strong>GPA:</strong> 3.3/4.0</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="resume-block reveal-text delay-200">
+            <h2 class="resume-sec-title">
+                <span class="title-accent">//</span>
+                <span class="lang-cn">项目经历</span>
+                <span class="lang-en">PROJECTS</span>
+            </h2>
+
+            <div class="resume-item">
+                <div class="item-header">
+                    <h3 class="item-title">
+                        <span class="lang-cn">全品类Steam游戏数据研究与分析 (个人项目)</span>
+                        <span class="lang-en">Comprehensive Steam Game Data Research & Analysis (Personal Project)</span>
+                    </h3>
+                    <div class="item-timeline">
+                        <span class="lang-cn">2025年05月 - 至今 | 加拿大多伦多</span>
+                        <span class="lang-en">May 2025 - Present | Toronto, Canada</span>
+                    </div>
+                </div>
+                <div class="item-sub">
+                    <span class="lang-cn">数据分析师</span>
+                    <span class="lang-en">Data Analyst</span>
+                </div>
+                <div class="item-desc">
+                    <p>
+                        <span class="lang-cn">使用Python及其ML/NLP库对百万级游戏及玩家数据进行定量与定性分析</span>
+                        <span class="lang-en">Conducted quantitative and qualitative analysis on millions of game and player data records using Python and its ML/NLP libraries.</span>
+                    </p>
+                </div>
+                <ul class="terminal-list">
+                    <li>
+                        <span class="lang-cn">使用Python从零构建基础程序框架,对超240款游戏的原始数据进行预处理(转化、整合、清洗与EDA)</span>
+                        <span class="lang-en">Built a foundational program framework from scratch using Python to preprocess (transform, integrate, clean, and perform EDA) raw data for over 240 games.</span>
+                    </li>
+                    <li>
+                        <span class="lang-cn">对游戏相关的核心数据进行了可视化处理与定量分析,展露了近15年内主流游戏种产生的变化,并结合 Scikit-learn 模型探索游戏关键指标(玩法、开发商、发行日期等)与用户评分及销量间的潜在联系并进行预测</span>
+                        <span class="lang-en">Visualized and quantitatively analyzed core game data, revealing trends in mainstream game genres over the past 15 years. Utilized Scikit-learn models to explore and predict potential correlations between key game metrics (gameplay, developer, release date, etc.) and user ratings/sales.</span>
+                    </li>
+                    <li>
+                        <span class="lang-cn">使用 VADER 模型对近百万条英文玩家评论进行情绪分析,挖掘用户核心诉求,分析玩家参与度与推荐可能性间的联系</span>
+                        <span class="lang-en">Applied the VADER model to conduct sentiment analysis on nearly a million English player reviews, uncovering core user demands and analyzing the relationship between player engagement and recommendation likelihood.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="resume-item">
+                <div class="item-header">
+                    <h3 class="item-title">
+                        <span class="lang-cn">Loop (4人团队)</span>
+                        <span class="lang-en">Loop (4-Person Team)</span>
+                    </h3>
+                    <div class="item-timeline">
+                        <span class="lang-cn">2024年09月 - 2024年12月 | 加拿大多伦多</span>
+                        <span class="lang-en">Sep 2024 - Dec 2024 | Toronto, Canada</span>
+                    </div>
+                </div>
+                <div class="item-sub">
+                    <span class="lang-cn">前期产品经理 / 用户体验设计师</span>
+                    <span class="lang-en">Early-Stage Product Manager / UX Designer</span>
+                </div>
+                <div class="item-desc">
+                    <p>
+                        <span class="lang-cn">Loop是一款旨在由用户内容驱动的,帮助旅者寻找城市中那些只有本地人才知道的宝藏地点的手机App</span>
+                        <span class="lang-en">Loop is a user-content-driven mobile app designed to help travelers discover hidden gems in cities known only to locals.</span>
+                    </p>
+                </div>
+                <ul class="terminal-list">
+                    <li>
+                        <span class="lang-cn">主导了前期的调研工作,判断出用户群体和利益相关者,主导设计了3版面谈问题并在6星期内对本校在校大学生进行了大量面谈工作以收集数据,通过编码和创建亲和图的方式发掘出约75%的用户有着相似的待解决的痛点</span>
+                        <span class="lang-en">Led preliminary research, identifying target user groups and stakeholders. Designed 3 iterations of interview questions and conducted extensive interviews with university students over 6 weeks to collect data. Discovered through coding and affinity mapping that approximately 75% of users shared similar unresolved pain points.</span>
+                    </li>
+                    <li>
+                        <span class="lang-cn">在项目中期主导了对Expedia,Spotted by Locals和去哪儿网等现有方案的竞品分析,发掘现有产品的缺陷或短板,并结合用户研究数据为我们的产品设计出差异化的优势核心功能与交互流程</span>
+                        <span class="lang-en">Led mid-project competitive analysis on existing solutions such as Expedia, Spotted by Locals, and Qunar, identifying their flaws and shortcomings. Combined findings with user research data to design differentiated core features and interaction flows for our product.</span>
+                    </li>
+                    <li>
+                        <span class="lang-cn">参加了原型的可用性测试与结果分析,邀请了10+没有参加过前期调研的在校大学生进行线下测试以获得产品反馈,通过行为观察和面对面访谈的方式收集测试数据,并针对原型中的交互、界面设计和元素排布进行了优化</span>
+                        <span class="lang-en">Participated in prototype usability testing and result analysis. Invited 10+ university students who hadn't participated in prior research for offline testing to gather product feedback. Collected data through behavioral observation and face-to-face interviews, optimizing interactions, UI design, and element layout in the prototype.</span>
+                    </li>
+                    <li>
+                        <span class="lang-cn">工具:使用MS Excel进行了研究发现编码、使用FigJam创建了亲和图与用户流程设计、使用Figma设计了产品线稿与原型</span>
+                        <span class="lang-en">Tools: Used MS Excel for research finding coding, FigJam for creating affinity diagrams and user flow designs, and Figma for designing product wireframes and prototypes.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="resume-block reveal-text delay-200">
+            <h2 class="resume-sec-title">
+                <span class="title-accent">//</span>
+                <span class="lang-cn">游戏经历</span>
+                <span class="lang-en">GAMING EXPERIENCE</span>
+            </h2>
+            <div class="resume-item">
+                <div class="item-desc paragraph-spacing">
+                    <p>
+                        <span class="lang-cn">我是一名非常热爱二次元文化的游戏玩家,对箱庭和开放世界类型充满热情,同时也非常愿意去尝试不同玩法和风格的二次元手游和端游,一些有深度体验并主线全通的有:原神(满级,累计氪金4万+,拥有多款官方与同人周边)、崩坏:星穹铁道(大小月卡,活跃超200天)以及明日方舟(满级,60+满练度角色);</span>
+                        <span class="lang-en">I am an avid gamer deeply passionate about ACG (Anime, Comic, Games) culture, with a strong enthusiasm for sandbox and open-world genres. I actively explore various gameplay styles in ACG mobile and PC games. Titles I have deeply experienced and completed the main storylines for include: Genshin Impact (Max level, spent 40k+ CNY, own various official/fan merch), Honkai: Star Rail (Monthly passes, active over 200 days), and Arknights (Max level, 60+ max-built characters).</span>
+                    </p>
+                    <p>
+                        <span class="lang-cn">暂时退坑但也长时间体验过的有:绝区零(开服玩家,大小月卡)、蔚蓝档案(社团长,40+满练度角色)等</span>
+                        <span class="lang-en">Titles I previously played extensively but am currently on hiatus from include: Zenless Zone Zero (Day-1 player, monthly passes) and Blue Archive (Club Leader, 40+ max-built characters).</span>
+                    </p>
+                    <p>
+                        <span class="lang-cn">此外,在二游之外我还是一名杂食性游戏玩家,各种风格的游戏和3A大作都有过涉猎,在12年的Steam生涯中购买过大量不同风格与类型的游戏,累计游玩超过16000小时。其中,动作冒险类(比如底特律:变人,怪物猎人:世界,孤岛惊魂系列,刺客信条系列)、Roguelike(比如雨中冒险系列和杀戮尖塔)和模拟类游戏都是我非常喜欢的类型</span>
+                        <span class="lang-en">Beyond ACG games, I am an omnivorous gamer who has explored various genres and AAA titles. Over my 12-year Steam history, I have purchased a wide variety of games, accumulating over 16,000 hours of playtime. My favorite genres include Action-Adventure (e.g., Detroit: Become Human, Monster Hunter: World, Far Cry series, Assassin's Creed series), Roguelike (e.g., Risk of Rain series, Slay the Spire), and Simulation games.</span>
+                    </p>
+                    <p>
+                        <span class="lang-cn">最后,我还喜欢在各种游戏的官方和同人社区中与其他游戏玩家交流,彼此发掘彩蛋、分析机制、分享攻略等内容,并在空闲的时候积极参与到社区的构建和维护工作</span>
+                        <span class="lang-en">Finally, I enjoy engaging with other players in official and fan communities across various games to discover Easter eggs, analyze game mechanics, and share guides. In my free time, I actively participate in community building and maintenance.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="resume-block reveal-text delay-200">
+            <h2 class="resume-sec-title">
+                <span class="title-accent">//</span>
+                <span class="lang-cn">社团和组织经历</span>
+                <span class="lang-en">ORGANIZATION EXPERIENCE</span>
+            </h2>
+            <div class="resume-item">
+                <div class="item-header">
+                    <h3 class="item-title">
+                        <span class="lang-cn">University of Toronto Esports | 多伦多大学电子竞技社团</span>
+                        <span class="lang-en">University of Toronto Esports</span>
+                    </h3>
+                    <div class="item-timeline">
+                        <span class="lang-cn">2024年09月 - 至今 | 加拿大多伦多</span>
+                        <span class="lang-en">Sep 2024 - Present | Toronto, Canada</span>
+                    </div>
+                </div>
+                <div class="item-sub">
+                    <span class="lang-cn">战队副经理 / 赛事副负责人 / 社区运营 UTES Apex Legends | Apex英雄分部</span>
+                    <span class="lang-en">Vice Team Manager / Vice Tournament Lead / Community Ops - UTES Apex Legends Division</span>
+                </div>
+                <ul class="terminal-list">
+                    <li>
+                        <span class="lang-cn">主导扩大分社团规模,通过在线平台与线下宣传的方式,帮助社团分部门实现了50人以上的成员增长</span>
+                        <span class="lang-en">Led the expansion of the division's scale, achieving a member growth of over 50 people through online platforms and offline promotional activities.</span>
+                    </li>
+                    <li>
+                        <span class="lang-cn">主导分部门电子竞技队伍的成立,北美区域的高校赛注册,以及协助了首批队员的筛选与任命</span>
+                        <span class="lang-en">Spearheaded the establishment of the division's esports team, managed registration for North American collegiate tournaments, and assisted in the screening and appointment of the inaugural roster.</span>
+                    </li>
+                    <li>
+                        <span class="lang-cn">负责运营和维护成员超过110人的社团分部门Discord社区</span>
+                        <span class="lang-en">Responsible for operating and maintaining the division's Discord community, supporting over 110 members.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+
+<script src="../script.js"></script>
+</body>
+</html>
