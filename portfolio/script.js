@@ -25,29 +25,90 @@ document.addEventListener("DOMContentLoaded", function() {
     const elements = document.querySelectorAll('.reveal-text');
     elements.forEach(el => observer.observe(el));
 
-    //打字机
-    const cnSpan = document.getElementById('type-cn');
-    const enSpan = document.getElementById('type-en');
+    // 打字机
+    const cnContainer = document.getElementById('type-cn');
+    const enContainer = document.getElementById('type-en');
 
-    if (cnSpan && enSpan) {
-        const cnText = cnSpan.innerText;
-        const enText = enSpan.innerText;
+    if (cnContainer && enContainer) {
 
-        cnSpan.innerText = '';
-        enSpan.innerText = '';
-        cnSpan.classList.remove('finished');
-        enSpan.classList.remove('finished');
+        // 1. 解析函数：把 HTML 结构解析成“待打印”的片段数组
+        // 这样可以保留 class (颜色) 信息
+        function parseContent(container) {
+            const segments = [];
+            // 遍历子节点 (span 或 纯文本)
+            container.childNodes.forEach(node => {
+                if (node.nodeType === 3) { // 文本节点
+                    segments.push({ text: node.textContent, className: '' });
+                } else if (node.nodeType === 1) { // 元素节点 (span)
+                    segments.push({ text: node.textContent, className: node.className });
+                }
+            });
+            return segments;
+        }
 
-        let i = 0;
-        const speed = 25;
-        const maxLength = Math.max(cnText.length, enText.length);
+        // 2. 初始化数据
+        const cnSegments = parseContent(cnContainer);
+        const enSegments = parseContent(enContainer);
 
-        function typeWriter() {
-            if (i < maxLength) {
-                if (i < cnText.length) cnSpan.innerText += cnText.charAt(i);
-                if (i < enText.length) enSpan.innerText += enText.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
+        // 3. 清空容器，准备开始
+        cnContainer.innerHTML = '';
+        enContainer.innerHTML = '';
+        cnContainer.classList.remove('finished');
+        enContainer.classList.remove('finished');
+
+        // 4. 状态追踪器
+        // 我们需要追踪：当前打到第几个片段(segIndex)，该片段打到第几个字(charIndex)
+        let cnState = { segIndex: 0, charIndex: 0, currentSpan: null };
+        let enState = { segIndex: 0, charIndex: 0, currentSpan: null };
+
+        // 计算总字数用于判断结束 (为了保持原有的同步结束逻辑)
+        const cnTotalLen = cnSegments.reduce((sum, seg) => sum + seg.text.length, 0);
+        const enTotalLen = enSegments.reduce((sum, seg) => sum + seg.text.length, 0);
+        const maxLength = Math.max(cnTotalLen, enTotalLen);
+
+        let globalIndex = 0; // 全局计数器
+        const speed = 25;    // 打字速度
+
+        // 5. 单步打印函数：负责向 DOM 中追加字符
+        function typeStep(container, segments, state) {
+            // 如果片段都打完了，直接返回
+            if (state.segIndex >= segments.length) return;
+
+            const currentSegment = segments[state.segIndex];
+
+            // 如果当前没有正在操作的 span，说明刚进入一个新片段，需要创建它
+            if (!state.currentSpan) {
+                state.currentSpan = document.createElement('span');
+                if (currentSegment.className) {
+                    state.currentSpan.className = currentSegment.className;
+                }
+                container.appendChild(state.currentSpan);
+            }
+
+            // 追加一个字符
+            const char = currentSegment.text[state.charIndex];
+            state.currentSpan.textContent += char;
+            state.charIndex++;
+
+            // 检查当前片段是否打完
+            if (state.charIndex >= currentSegment.text.length) {
+                state.segIndex++;      // 移动到下一个片段
+                state.charIndex = 0;   // 重置字符索引
+                state.currentSpan = null; // 重置当前 span 引用，以便下次创建新的
+            }
+        }
+
+        // 6. 核心循环
+        function typeWriterLoop() {
+            if (globalIndex < maxLength) {
+                // 如果中文还没打完，打一步
+                if (globalIndex < cnTotalLen) typeStep(cnContainer, cnSegments, cnState);
+
+                // 如果英文还没打完，打一步
+                if (globalIndex < enTotalLen) typeStep(enContainer, enSegments, enState);
+
+                globalIndex++;
+                setTimeout(typeWriterLoop, speed);
             } else {
                 revealRestOfHero();
             }
@@ -57,12 +118,13 @@ document.addEventListener("DOMContentLoaded", function() {
             const waitingElements = document.querySelectorAll('.wait-for-typewriter');
             waitingElements.forEach(el => el.classList.add('show'));
             setTimeout(() => {
-                cnSpan.classList.add('finished');
-                enSpan.classList.add('finished');
+                cnContainer.classList.add('finished');
+                enContainer.classList.add('finished');
             }, 1000);
         }
 
-        setTimeout(typeWriter, 500);
+        // 启动
+        setTimeout(typeWriterLoop, 500);
     }
 
     // 回到顶部逻辑 (融合到高度计箭头)
