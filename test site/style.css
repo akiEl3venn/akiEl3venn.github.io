@@ -894,6 +894,10 @@ body.en-mode h1 .lang-en, body.en-mode div .lang-en, body.en-mode li .lang-en { 
     letter-spacing: 1px;
 }
 
+body.en-mode div .meta-item .lang-en {
+    display: inline-block !important;
+}
+
 /* Hide the current status as requested */
 .hidden-status {
     display: none !important;
@@ -1092,3 +1096,4 @@ body.en-mode h1 .lang-en, body.en-mode div .lang-en, body.en-mode li .lang-en { 
         align-items: flex-start;
     }
 }}
+
