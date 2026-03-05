@@ -31,15 +31,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (cnContainer && enContainer) {
 
-        // 1. Parse function: Parse HTML structure into an array of segments to be typed
-        // This preserves class (color) information
+        // 1. Parse function: Parse HTML structure into segments
         function parseContent(container) {
             const segments = [];
-            // Traverse child nodes (span or text)
             container.childNodes.forEach(node => {
-                if (node.nodeType === 3) { // Text node
+                if (node.nodeType === 3) {
                     segments.push({ text: node.textContent, className: '' });
-                } else if (node.nodeType === 1) { // Element node (span)
+                } else if (node.nodeType === 1) {
                     segments.push({ text: node.textContent, className: node.className });
                 }
             });
@@ -56,24 +54,22 @@ document.addEventListener("DOMContentLoaded", function() {
         cnContainer.classList.remove('finished');
         enContainer.classList.remove('finished');
 
-        // Remove the class that initially hides the container to prevent FOUC
+        // Remove the initial hide class and add typing started class to prevent FOUC
         cnContainer.classList.remove('hide-initial');
         enContainer.classList.remove('hide-initial');
         cnContainer.classList.add('typing-started');
         enContainer.classList.add('typing-started');
 
         // 4. State trackers
-        // We track: which segment we are on (segIndex), which char in segment (charIndex)
         let cnState = { segIndex: 0, charIndex: 0, currentSpan: null };
         let enState = { segIndex: 0, charIndex: 0, currentSpan: null };
 
-        // Calculate total length for ending loop properly
         const cnTotalLen = cnSegments.reduce((sum, seg) => sum + seg.text.length, 0);
         const enTotalLen = enSegments.reduce((sum, seg) => sum + seg.text.length, 0);
         const maxLength = Math.max(cnTotalLen, enTotalLen);
 
-        let globalIndex = 0; // Global counter
-        const speed = 25;    // Typing speed
+        let globalIndex = 0;
+        const speed = 25;
 
         // 5. Single step print function
         function typeStep(container, segments, state) {
@@ -81,7 +77,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const currentSegment = segments[state.segIndex];
 
-            // Create span if entering a new segment
             if (!state.currentSpan) {
                 state.currentSpan = document.createElement('span');
                 if (currentSegment.className) {
@@ -90,12 +85,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 container.appendChild(state.currentSpan);
             }
 
-            // Append character
             const char = currentSegment.text[state.charIndex];
             state.currentSpan.textContent += char;
             state.charIndex++;
 
-            // Check if segment is finished
             if (state.charIndex >= currentSegment.text.length) {
                 state.segIndex++;
                 state.charIndex = 0;
@@ -129,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function() {
         setTimeout(typeWriterLoop, 500);
     }
 
-    // Back to top logic (integrated into altimeter marker)
+    // Back to top logic
     const altMarker = document.getElementById('alt-marker');
     if (altMarker) {
         altMarker.addEventListener('click', () => {
@@ -150,7 +143,6 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
 
-        // Listen to scroll to show/hide mobile button
         window.addEventListener('scroll', () => {
             if (window.scrollY > 500) {
                 mobileRtbBtn.classList.add('visible');
@@ -162,13 +154,11 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // Auxiliary functions
-// Altimeter
 function updateAltimeter() {
     const marker = document.getElementById('alt-marker');
     const valText = document.getElementById('alt-val');
 
     const scrollTop = window.scrollY;
-    // Using body.scrollHeight is sometimes more accurate, taking the max for safety
     const docHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) - window.innerHeight;
 
     let scrollPercent = 0;
@@ -178,10 +168,8 @@ function updateAltimeter() {
     scrollPercent = Math.max(0, Math.min(1, scrollPercent));
 
     if(marker) {
-        // Set style.top directly, works with CSS mask for transitions
         marker.style.top = `${scrollPercent * 100}%`;
 
-        // Automatically show RTB prompt after scrolling past Hero section
         if (window.scrollY > window.innerHeight * 0.8) {
             marker.classList.add('show-rtb');
         } else {
@@ -190,22 +178,18 @@ function updateAltimeter() {
     }
 
     if(valText) {
-        // Add slight random jitter to simulate real dashboard data fluctuation
         const noise = Math.random() > 0.8 ? Math.floor(Math.random() * 2) : 0;
         const displayVal = Math.floor(scrollPercent * 100) + noise;
         valText.innerText = Math.min(100, Math.max(0, displayVal)).toString().padStart(3, '0');
     }
 }
 
-// Toggle more projects
 function toggleMore() {
     const grid = document.getElementById('moreGrid');
     grid.classList.toggle('open');
-    // Trigger scroll data update to recalculate background
     setTimeout(updateScrollData, 800);
 }
 
-// Multi-language
 function toggleLanguage() {
     const body = document.body;
     const btn = document.getElementById('lang-switch');
@@ -247,7 +231,6 @@ function updateScrollData() {
     updateAltimeter();
 }
 
-// Use ResizeObserver to monitor Body height changes
 const resizeObserver = new ResizeObserver(() => {
     updateScrollData();
 });
@@ -269,7 +252,6 @@ window.addEventListener('scroll', () => {
 
 updateScrollData();
 
-// Terrain class
 class Terrain {
     constructor() {
         this.seeds = Array.from({ length: 8 }, () => Math.random() * 1000);
@@ -291,14 +273,12 @@ class Terrain {
 
 const terrain = new Terrain();
 
-// Density algorithm based on viewport protection
 function getSpacingAt(y) {
     const effectiveY = Math.max(0, y - height);
     const effectiveTotal = Math.max(1, docHeight - height);
     let p = effectiveY / effectiveTotal;
     p = Math.max(0, Math.min(1, p));
 
-    // Top spacing 1200px, bottom spacing 60px
     const startSpacing = 1200;
     const endSpacing = 60;
 
@@ -358,7 +338,6 @@ function draw() {
                 }
                 ctx.stroke();
             }
-            // Step
             currentRelY += Math.max(20, spacing);
         }
     }

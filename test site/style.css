@@ -1,10 +1,9 @@
 :root {
-    /* Rocket Light Theme Core Variables */
     --bg-color: #f4f4f6;
     --text-main: #1a1a1c;
     --text-muted: #666666;
-    --accent: #0b3d91; /* Aerospace Blue */
-    --highlight: #c24100; /* Deep Burnt Orange for white bg */
+    --accent: #0b3d91;
+    --highlight: #c24100;
     --tech-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --transition-curve: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -28,7 +27,6 @@ body {
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 
-/* Layout Container */
 .container {
     width: 100%;
     max-width: 1400px;
@@ -39,7 +37,7 @@ ul { list-style: none; }
 }
 
 /* =========================================
-   Flat Modern Bug-Free SVG Header
+   Flat Modern Trapezoid Header
    ========================================= */
 .modern-header {
     position: fixed;
@@ -48,63 +46,40 @@ ul { list-style: none; }
     transform: translateX(-50%);
     width: 90%;
     max-width: 1400px;
+    /* Restore the original thin vertical height */
     padding: 12px 0 20px 0;
     z-index: 10000;
+    perspective: 1000px;
 }
 
-/* Base structural shadow layer */
 .header-bg {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
+    background: #ffffff;
     z-index: -1;
-    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.06));
+    transform-origin: top center;
+    transform: rotateX(-12deg);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
 }
 
-/* 2D Skew technique for flawless trapezoid geometry */
-.bg-left {
-    position: absolute;
-    top: 0; bottom: 0; left: 80px; right: 50%;
-    background: #ffffff;
-    transform: skewX(14deg);
-    transform-origin: top right;
-    border-bottom-left-radius: 12px;
-}
-
-.bg-right {
-    position: absolute;
-    top: 0; bottom: 0; left: 50%; right: 80px;
-    background: #ffffff;
-    transform: skewX(-14deg);
-    transform-origin: top left;
-    border-bottom-right-radius: 12px;
-}
-
-/* Perfectly smooth SVG outer flares */
-.flare {
-    position: absolute;
-    top: 0;
-    width: 100px;
-    height: 40px;
-}
-
-.flare-left { left: 0; }
-.flare-right { right: 0; }
-
-/* Flat content container safe from skews */
 .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    /* Slightly increased from the original 80px to 100px for better breathing room */
     padding: 0 100px;
     position: relative;
     z-index: 2;
 }
 
 .header-content .logo {
-    font-weight: 800;
+    font-family: var(--tech-font);
+    font-weight: 700;
     font-size: 1.1rem;
-    letter-spacing: 1.5px;
+    letter-spacing: 0.5px;
     color: var(--text-main);
     text-transform: uppercase;
 }
@@ -116,12 +91,13 @@ ul { list-style: none; }
 }
 
 .header-content .menu-link {
-    font-size: 0.85rem;
+    font-family: var(--tech-font);
+    font-size: 0.9rem;
     color: var(--text-muted);
     transition: all 0.3s ease;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-weight: 600;
+    letter-spacing: 1px;
+    font-weight: 500;
     position: relative;
 }
 
@@ -129,7 +105,6 @@ ul { list-style: none; }
     color: var(--accent);
 }
 
-/* Diagonal Separator 1 (Orange) */
 .header-content .menu-link:nth-child(1)::after {
     content: '';
     position: absolute;
@@ -141,7 +116,6 @@ ul { list-style: none; }
     background-color: #fb5607;
 }
 
-/* Diagonal Separator 2 (Yellow) */
 .header-content .menu-link:nth-child(2)::after {
     content: '';
     position: absolute;
@@ -156,8 +130,8 @@ ul { list-style: none; }
 #lang-switch {
     cursor: pointer;
     border: 1px solid var(--text-muted);
-    padding: 3px 10px;
-    font-size: 0.75rem;
+    padding: 4px 12px;
+    font-size: 0.8rem;
     border-radius: 2px;
     background: transparent;
     color: var(--text-muted);
@@ -170,15 +144,17 @@ ul { list-style: none; }
     border-color: var(--text-main);
 }
 
-/* Horizontal Gradient Accent Line */
 .header-accent-line {
     position: absolute;
-    bottom: 8px;
+    bottom: 12px;
+    /* Exactly match the padding of header-content to ensure equal length */
     left: 100px;
     right: 100px;
     height: 3px;
-    background: linear-gradient(to right, #fb5607, #ffbe0b);
-    border-radius: 2px;
+    /* Start with the Hero highlight color and fade into yellow */
+    background: linear-gradient(to right, var(--highlight), #ffbe0b);
+    /* Removed border-radius for a sharper, more industrial look */
+    border-radius: 0;
     z-index: 2;
 }
 
@@ -383,7 +359,6 @@ ul { list-style: none; }
     padding-top: 100px;
 }
 
-/* Typewriter Highlight Variables */
 .highlight {
     color: var(--highlight);
 }
@@ -408,10 +383,10 @@ ul { list-style: none; }
     50% { opacity: 0; }
 }
 
-/* Hides content briefly before JS kicks in to prevent FOUC */
 .hide-initial {
     opacity: 0;
 }
+
 .typing-started {
     opacity: 1;
 }
@@ -772,15 +747,28 @@ body.en-mode h1 .lang-en, body.en-mode div .lang-en, body.en-mode li .lang-en { 
     .altimeter, .hud-line-left {
         display: none;
     }
+
     .modern-header {
         width: 100%;
-        padding: 0 20px 14px 20px;
+        padding: 15px 0 20px 0;
+        perspective: none;
     }
-    .bg-left { left: 0; transform: none; border-bottom-left-radius: 0; }
-    .bg-right { right: 0; transform: none; border-bottom-right-radius: 0; }
-    .flare { display: none; }
-    .header-content { padding: 0; padding-top: 10px; }
-    .header-accent-line { left: 20px; right: 20px; bottom: 6px; }
+
+    .header-bg {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        transform: none;
+    }
+
+    .header-content {
+        padding: 0 30px;
+    }
+
+    .header-accent-line {
+        left: 30px;
+        right: 30px;
+        bottom: 8px;
+    }
 
     .container {
         padding-left: 30px;
@@ -821,3 +809,286 @@ body.en-mode h1 .lang-en, body.en-mode div .lang-en, body.en-mode li .lang-en { 
         width: 30px;
     }
 }
+
+
+/* =========================================
+   Resume Page Specific Styles (Light Theme)
+   ========================================= */
+
+.resume-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.resume-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
+/* 之前这里的 .resume-divider 样式已被删除，
+   为页面提供更连续、干净的视觉流。 */
+
+/* Download Button (Orange Accent) */
+.resume-download-btn {
+    background: transparent;
+    border: 1px solid var(--highlight);
+    color: var(--highlight);
+    padding: 8px 20px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.resume-download-btn:hover {
+    background: var(--highlight);
+    color: #ffffff;
+    border-color: var(--highlight);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(194, 65, 0, 0.2);
+}
+
+/* Profile Section */
+.resume-profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 60px;
+    gap: 40px;
+}
+
+.profile-info { flex: 1; }
+
+.profile-name {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 30px;
+    letter-spacing: -1px;
+}
+
+/* Optimized spacing for meta info */
+.profile-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px 40px;
+    margin-bottom: 25px;
+}
+
+.meta-item {
+    font-size: 1rem;
+    color: var(--text-main);
+    line-height: 1.8;
+}
+
+.meta-label {
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-right: 12px;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+/* Hide the current status as requested */
+.hidden-status {
+    display: none !important;
+}
+
+/* Photo Placeholder */
+.profile-photo-box {
+    width: 140px;
+    height: 180px;
+    background-color: #f8f8fa;
+    border: 1px dashed rgba(0,0,0,0.15);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.profile-photo-box .hud-corner {
+    border-color: rgba(194, 65, 0, 0.3);
+}
+
+.photo-placeholder-text {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-align: center;
+    writing-mode: vertical-rl;
+    letter-spacing: 3px;
+    opacity: 0.6;
+}
+
+/* =========================================
+   Resume Card Blocks with Refined Tri-Color Stripe
+   ========================================= */
+
+.resume-block {
+    position: relative;
+    background: #ffffff;
+    padding: 40px 50px;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    border: 1px solid rgba(0,0,0,0.05);
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+
+/* Refined Tri-Color Industrial Left Border (Blue, Separator Orange, Yellow) */
+.resume-block::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    /* Updated gradient using sharp #fb5607 orange for consistency with header */
+    background: linear-gradient(
+            to bottom,
+            var(--accent) 0%, var(--accent) 33.33%,
+            #fb5607 33.33%, #fb5607 66.66%,
+            #ffbe0b 66.66%, #ffbe0b 100%
+    );
+}
+
+/* Clean, simplified section title */
+.sec-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding-bottom: 15px;
+}
+
+.sec-title .title-accent {
+    color: var(--highlight);
+    margin-right: 12px;
+    font-weight: 800;
+}
+
+/* =========================================
+   Resume Content Items
+   ========================================= */
+
+.resume-item {
+    margin-bottom: 30px;
+}
+
+.resume-item:last-child {
+    margin-bottom: 0;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.item-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.tag-badge {
+    background: rgba(0,0,0,0.05);
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-size: 0.75rem;
+    font-weight: normal;
+    color: var(--text-muted);
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+/* Timeline font updated to match regular text */
+.item-timeline {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.item-sub {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--highlight); /* Deep Burnt Orange */
+    margin-bottom: 15px;
+}
+
+.item-desc p {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.paragraph-spacing p {
+    margin-bottom: 15px;
+    line-height: 1.8;
+}
+
+/* Terminal Style List (Orange Accent) */
+.terminal-list {
+    margin-top: 15px;
+    list-style: none;
+    padding-left: 5px;
+}
+
+.terminal-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.6;
+}
+
+.terminal-list li::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--highlight);
+    font-weight: bold;
+    font-family: monospace;
+}
+
+/* Responsive adjustments for Resume */
+@media (max-width: 768px) {
+    .resume-wrapper {
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+        border: none;
+    }
+
+    .resume-block {
+        padding: 30px 20px 30px 30px;
+    }
+
+    .resume-profile {
+        flex-direction: column-reverse;
+    }
+
+    .resume-top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .item-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}}
